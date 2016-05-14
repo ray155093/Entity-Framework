@@ -8,6 +8,12 @@ namespace EF
 {
     class Program
     {
+        public class  DeptCouseCount
+        {
+            public Int32 DepartmentID {set;get;}
+            public string Name {set;get;}
+            public Int32 CourseCount {set;get;}
+        }
         static void Main(string[] args)
         {
 
@@ -35,9 +41,12 @@ namespace EF
                 //Delete(db);
                 //Console.WriteLine("------");
                 //Select(db);
-                
 
-                SelectMult(db);
+
+                //SelectMult(db);
+                //Console.WriteLine("------");
+
+                SelectbyNativeSQL(db);
                 Console.WriteLine("------");
                 // Select(db);
 
@@ -172,8 +181,10 @@ namespace EF
         /// <param name="db"></param>
         public static void SelectMult(ContosoUniversityEntities db)
         {
+
             //開關 是否啟動導覽屬性
-           // db.Configuration.ProxyCreationEnabled = false;
+            //這段程式可下中斷點看一下他的類別、開啟 sql profiler 觀察叫用方式
+            // db.Configuration.ProxyCreationEnabled = false;
             var one = db.Course.Find(1);
 
             Console.WriteLine(one.Title + " \t" + one.Department.Name);
@@ -187,6 +198,20 @@ namespace EF
                 }
             }
 
+        }
+        public static void SelectbyNativeSQL(ContosoUniversityEntities db)
+        {
+            var sql = @"SELECT  Department.DepartmentID AS DepartmentID, Department.Name AS Name,count(*) CourseCount
+
+FROM      Course INNER JOIN
+                   Department ON Course.DepartmentID = Department.DepartmentID
+				   group by Department.DepartmentID, Department.Name ";
+            var data= db.Database.SqlQuery<DeptCouseCount>(sql);
+
+            foreach (var item in data)
+            {
+                Console.WriteLine(item.Name+" \t"+item.CourseCount);
+            }
         }
 
     }
