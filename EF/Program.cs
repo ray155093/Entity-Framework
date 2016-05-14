@@ -76,7 +76,22 @@ namespace EF
                     Console.WriteLine(item.Title);
 
                 }
-           
+
+                //刪除資料
+                /*
+                 * 此句會刪除一筆最新的資料 但不是CourseID編號12 new時並沒有在new時被讀取 因為CourseID是PK會自動新增
+                db.Course.Remove(new Course() { CourseID = 12 });
+                 * */
+                var c12 = db.Course.Find(12);
+                db.Course.Remove(c12);
+                db.SaveChanges();
+
+                //更新資料
+                foreach (var item in db.Course)
+                {
+                    item.Credits += 1;
+                }
+                db.SaveChanges();
             }
            
 
