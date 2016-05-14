@@ -11,6 +11,7 @@
     <NavigationProperty Name="Department" Relationship="Self.FK_dbo_Course_dbo_Department_DepartmentID" FromRole="Course" ToRole="Department" />
     <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_Course_CourseID" FromRole="Course" ToRole="Enrollment" />
     <NavigationProperty Name="Person" Relationship="Self.CourseInstructor" FromRole="Course" ToRole="Person" />
+    <Property Name="Memo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Department">
     <Key>
