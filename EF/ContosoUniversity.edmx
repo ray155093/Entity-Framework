@@ -14,7 +14,6 @@
           <Property Name="Credits" Type="int" Nullable="false" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
           <Property Name="Memo" Type="nvarchar" MaxLength="80" />
-          <Property Name="IsNUll" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="CourseInstructor">
           <Key>

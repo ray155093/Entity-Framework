@@ -24,23 +24,25 @@ namespace EF
             using (var db = new ContosoUniversityEntities())
             {
 
-                Select(db);
+                //Select(db);
+                //Console.WriteLine("------");
+                //SelectByLinq(db);
+                //Console.WriteLine("------");
+                //Insert(db);
+                //Console.WriteLine("------");
+                //InsertByFind(db);
+                //Console.WriteLine("------");
+                //Delete(db);
+                //Console.WriteLine("------");
+                //Select(db);
+                
+
+                SelectMult(db);
                 Console.WriteLine("------");
-                SelectByLinq(db);
-                Console.WriteLine("------");
-                Insert(db);
-                Console.WriteLine("------");
-                InsertByFind(db);
-                Console.WriteLine("------");
-                Delete(db);
-                Console.WriteLine("------");
-                Select(db);
+                // Select(db);
+
+
                 Console.ReadLine();
-
-                Select(db);
-
-
-
             }
 
 
@@ -164,6 +166,28 @@ namespace EF
 
         }
 
+        /// <summary>
+        /// 跨表輸出 延遲載入 導覽屬性
+        /// </summary>
+        /// <param name="db"></param>
+        public static void SelectMult(ContosoUniversityEntities db)
+        {
+            //開關 是否啟動導覽屬性
+           // db.Configuration.ProxyCreationEnabled = false;
+            var one = db.Course.Find(1);
+
+            Console.WriteLine(one.Title + " \t" + one.Department.Name);
+
+            foreach (var dept in db.Department)
+            {
+                Console.WriteLine(dept.Name);
+                foreach (var course in dept.Course)
+                {
+                    Console.WriteLine(dept.Name + "\t" + course.Title);
+                }
+            }
+
+        }
 
     }
 }
