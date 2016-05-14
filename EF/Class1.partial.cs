@@ -10,7 +10,7 @@ namespace EF
     {
         partial void init()
         {
-            string a = "!";
+           
         }
     }
 }

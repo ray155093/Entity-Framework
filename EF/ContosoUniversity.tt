@@ -57,10 +57,13 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 #>
         this.<#=code.Escape(complexProperty)#> = new <#=typeMapper.GetTypeName(complexProperty.TypeUsage)#>();
 <#
+	
         }
+		Initialize();
+	
 #>
     }
-
+	
 <#
     }
 

@@ -49,7 +49,10 @@ namespace EF
                 //SelectbyNativeSQL(db);
                 //Console.WriteLine("------");
 
-                SelectbyView(db);
+                //SelectbyView(db);
+                //Console.WriteLine("------");
+
+                InsertByInit(db);
                 Console.WriteLine("------");
                 // Select(db);
 
@@ -210,8 +213,7 @@ namespace EF
         public static void SelectbyNativeSQL(ContosoUniversityEntities db)
         {
             var sql = @"SELECT  Department.DepartmentID AS DepartmentID, Department.Name AS Name,count(*) CourseCount
-
-FROM      Course INNER JOIN
+                FROM      Course INNER JOIN
                    Department ON Course.DepartmentID = Department.DepartmentID
 				   group by Department.DepartmentID, Department.Name ";
             var data= db.Database.SqlQuery<DeptCouseCount>(sql);
@@ -230,10 +232,29 @@ FROM      Course INNER JOIN
 
             var data = db.View_DeptsourceCount;
 
+            if (data.Any())
+            { }
             foreach (var item in data)
             {
                 Console.WriteLine(item.Name + " \t" + item.CourseCount);
             }
+        }
+        /// <summary>
+        /// 新增欄位 Credits使用預設值
+        /// </summary>
+        /// <param name="db"></param>
+        public static void InsertByInit(ContosoUniversityEntities db)
+        {
+            Console.WriteLine("Insert");
+            //新增欄位
+            db.Course.Add(new Course()
+            {
+                Title = "Git Test",
+                DepartmentID = 1
+            });
+
+            db.SaveChanges();
+
         }
     }
 }

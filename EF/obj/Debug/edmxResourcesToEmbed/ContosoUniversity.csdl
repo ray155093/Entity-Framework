@@ -12,6 +12,7 @@
     <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_Course_CourseID" FromRole="Course" ToRole="Enrollment" />
     <NavigationProperty Name="Person" Relationship="Self.CourseInstructor" FromRole="Course" ToRole="Person" />
     <Property Name="Memo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="CreateOn" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="Department">
     <Key>
@@ -161,6 +162,8 @@
       <End Role="Person" EntitySet="Person" />
     </AssociationSet>
     <EntitySet Name="View_DeptsourceCount" EntityType="ContosoUniversityModel.View_DeptsourceCount" />
+    <EntitySet Name="vw_test" EntityType="ContosoUniversityModel.vw_test" />
+    <EntitySet Name="sysdiagrams" EntityType="ContosoUniversityModel.sysdiagrams" />
   </EntityContainer>
   <EntityType Name="View_DeptsourceCount">
     <Key>
@@ -169,5 +172,22 @@
     <Property Name="DepartmentID" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CourseCount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vw_test">
+    <Key>
+      <PropertyRef Name="Expr1" />
+    </Key>
+    <Property Name="Expr1" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
 </Schema>

@@ -21,7 +21,7 @@ namespace EF
             this.Enrollment = new HashSet<Enrollment>();
             this.Course = new HashSet<Course>();
         }
-    
+    	
         public int ID { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }

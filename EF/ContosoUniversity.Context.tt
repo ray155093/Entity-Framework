@@ -35,8 +35,10 @@ if (!String.IsNullOrEmpty(codeNamespace))
 #>
 namespace <#=code.EscapeNamespace(codeNamespace)#>
 {
+  
 <#
     PushIndent("    ");
+	Initialize();
 }
 
 #>
