@@ -46,7 +46,10 @@ namespace EF
                 //SelectMult(db);
                 //Console.WriteLine("------");
 
-                SelectbyNativeSQL(db);
+                //SelectbyNativeSQL(db);
+                //Console.WriteLine("------");
+
+                SelectbyView(db);
                 Console.WriteLine("------");
                 // Select(db);
 
@@ -199,6 +202,11 @@ namespace EF
             }
 
         }
+
+        /// <summary>
+        /// 查詢fromSQL
+        /// </summary>
+        /// <param name="db"></param>
         public static void SelectbyNativeSQL(ContosoUniversityEntities db)
         {
             var sql = @"SELECT  Department.DepartmentID AS DepartmentID, Department.Name AS Name,count(*) CourseCount
@@ -213,6 +221,19 @@ FROM      Course INNER JOIN
                 Console.WriteLine(item.Name+" \t"+item.CourseCount);
             }
         }
+        /// <summary>
+        /// 查詢ByView
+        /// </summary>
+        /// <param name="db"></param>
+        public static void SelectbyView(ContosoUniversityEntities db)
+        {
 
+            var data = db.View_DeptsourceCount;
+
+            foreach (var item in data)
+            {
+                Console.WriteLine(item.Name + " \t" + item.CourseCount);
+            }
+        }
     }
 }

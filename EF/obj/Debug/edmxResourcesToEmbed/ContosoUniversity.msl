@@ -62,5 +62,14 @@
         <ScalarProperty Name="ID" ColumnName="InstructorID" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="View_DeptsourceCount">
+      <EntityTypeMapping TypeName="ContosoUniversityModel.View_DeptsourceCount">
+        <MappingFragment StoreEntitySet="View_DeptsourceCount">
+          <ScalarProperty Name="CourseCount" ColumnName="CourseCount" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

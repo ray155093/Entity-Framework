@@ -30,5 +30,6 @@ namespace EF
         public virtual DbSet<Enrollment> Enrollment { get; set; }
         public virtual DbSet<OfficeAssignment> OfficeAssignment { get; set; }
         public virtual DbSet<Person> Person { get; set; }
+        public virtual DbSet<View_DeptsourceCount> View_DeptsourceCount { get; set; }
     }
 }

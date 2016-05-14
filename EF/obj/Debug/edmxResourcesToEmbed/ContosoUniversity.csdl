@@ -160,5 +160,14 @@
       <End Role="Course" EntitySet="Course" />
       <End Role="Person" EntitySet="Person" />
     </AssociationSet>
+    <EntitySet Name="View_DeptsourceCount" EntityType="ContosoUniversityModel.View_DeptsourceCount" />
   </EntityContainer>
+  <EntityType Name="View_DeptsourceCount">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CourseCount" Type="Int32" />
+  </EntityType>
 </Schema>

@@ -61,6 +61,16 @@
           <Property Name="EnrollmentDate" Type="datetime" />
           <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'ContosoUniversity.dbo.View_DeptsourceCount' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="View_DeptsourceCount">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CourseCount" Type="int" />
+        </EntityType>
         <Association Name="FK_dbo_Course_dbo_Department_DepartmentID">
           <End Role="Department" Type="Self.Department" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -162,6 +172,13 @@
           <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OfficeAssignment" EntityType="Self.OfficeAssignment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_DeptsourceCount" EntityType="Self.View_DeptsourceCount" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_DeptsourceCount].[DepartmentID] AS [DepartmentID], 
+    [View_DeptsourceCount].[Name] AS [Name], 
+    [View_DeptsourceCount].[CourseCount] AS [CourseCount]
+    FROM [dbo].[View_DeptsourceCount] AS [View_DeptsourceCount]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_dbo_Course_dbo_Department_DepartmentID" Association="Self.FK_dbo_Course_dbo_Department_DepartmentID">
             <End Role="Department" EntitySet="Department" />
             <End Role="Course" EntitySet="Course" />
@@ -355,7 +372,16 @@
             <End Role="Course" EntitySet="Course" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
+          <EntitySet Name="View_DeptsourceCount" EntityType="ContosoUniversityModel.View_DeptsourceCount" />
         </EntityContainer>
+        <EntityType Name="View_DeptsourceCount">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CourseCount" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -423,6 +449,15 @@
               <ScalarProperty Name="ID" ColumnName="InstructorID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="View_DeptsourceCount">
+            <EntityTypeMapping TypeName="ContosoUniversityModel.View_DeptsourceCount">
+              <MappingFragment StoreEntitySet="View_DeptsourceCount">
+                <ScalarProperty Name="CourseCount" ColumnName="CourseCount" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
