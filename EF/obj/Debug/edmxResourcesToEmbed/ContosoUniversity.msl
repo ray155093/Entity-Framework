@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Course">
       <EntityTypeMapping TypeName="ContosoUniversityModel.Course">
         <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
           <ScalarProperty Name="Memo" ColumnName="Memo" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
           <ScalarProperty Name="Title" ColumnName="Title" />
@@ -68,6 +69,14 @@
           <ScalarProperty Name="CourseCount" ColumnName="CourseCount" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vw_test">
+      <EntityTypeMapping TypeName="ContosoUniversityModel.vw_test">
+        <MappingFragment StoreEntitySet="vw_test">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Expr1" ColumnName="Expr1" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -9,6 +9,7 @@
     <Property Name="Credits" Type="int" Nullable="false" />
     <Property Name="DepartmentID" Type="int" Nullable="false" />
     <Property Name="Memo" Type="nvarchar" MaxLength="80" />
+    <Property Name="CreateOn" Type="datetime" StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="CourseInstructor">
     <Key>
@@ -65,6 +66,15 @@
     <Property Name="DepartmentID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="CourseCount" Type="int" />
+  </EntityType>
+  <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'ContosoUniversity.dbo.vw_test' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+  <EntityType Name="vw_test">
+    <Key>
+      <PropertyRef Name="Expr1" />
+    </Key>
+    <Property Name="Expr1" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_dbo_Course_dbo_Department_DepartmentID">
     <End Role="Department" Type="Self.Department" Multiplicity="1">
@@ -173,6 +183,12 @@
     [View_DeptsourceCount].[Name] AS [Name], 
     [View_DeptsourceCount].[CourseCount] AS [CourseCount]
     FROM [dbo].[View_DeptsourceCount] AS [View_DeptsourceCount]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="vw_test" EntityType="Self.vw_test" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [vw_test].[Expr1] AS [Expr1], 
+    [vw_test].[Name] AS [Name]
+    FROM [dbo].[vw_test] AS [vw_test]</DefiningQuery>
     </EntitySet>
     <AssociationSet Name="FK_dbo_Course_dbo_Department_DepartmentID" Association="Self.FK_dbo_Course_dbo_Department_DepartmentID">
       <End Role="Department" EntitySet="Department" />

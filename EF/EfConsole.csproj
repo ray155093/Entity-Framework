@@ -72,6 +72,7 @@
     <Compile Include="Course.cs">
       <DependentUpon>ContosoUniversity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Course.partial.cs" />
     <Compile Include="Department.cs">
       <DependentUpon>ContosoUniversity.tt</DependentUpon>
     </Compile>
@@ -87,6 +88,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View_DeptsourceCount.cs">
+      <DependentUpon>ContosoUniversity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vw_test.cs">
       <DependentUpon>ContosoUniversity.tt</DependentUpon>
     </Compile>
   </ItemGroup>

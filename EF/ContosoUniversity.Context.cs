@@ -9,6 +9,7 @@
 
 namespace EF
 {
+  
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -31,5 +32,6 @@ namespace EF
         public virtual DbSet<OfficeAssignment> OfficeAssignment { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<View_DeptsourceCount> View_DeptsourceCount { get; set; }
+        public virtual DbSet<vw_test> vw_test { get; set; }
     }
 }

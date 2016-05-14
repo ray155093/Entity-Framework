@@ -12,6 +12,7 @@
     <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_Course_CourseID" FromRole="Course" ToRole="Enrollment" />
     <NavigationProperty Name="Person" Relationship="Self.CourseInstructor" FromRole="Course" ToRole="Person" />
     <Property Name="Memo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="CreateOn" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="Department">
     <Key>
@@ -161,6 +162,7 @@
       <End Role="Person" EntitySet="Person" />
     </AssociationSet>
     <EntitySet Name="View_DeptsourceCount" EntityType="ContosoUniversityModel.View_DeptsourceCount" />
+    <EntitySet Name="vw_test" EntityType="ContosoUniversityModel.vw_test" />
   </EntityContainer>
   <EntityType Name="View_DeptsourceCount">
     <Key>
@@ -169,5 +171,12 @@
     <Property Name="DepartmentID" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CourseCount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vw_test">
+    <Key>
+      <PropertyRef Name="Expr1" />
+    </Key>
+    <Property Name="Expr1" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>
