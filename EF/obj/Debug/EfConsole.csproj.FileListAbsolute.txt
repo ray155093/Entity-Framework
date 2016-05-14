@@ -1,0 +1,11 @@
+D:\practice\program2\EF\EF\obj\Debug\EfConsole.csprojResolveAssemblyReference.cache
+D:\practice\program2\EF\EF\bin\Debug\EF.exe.config
+D:\practice\program2\EF\EF\bin\Debug\EF.exe
+D:\practice\program2\EF\EF\bin\Debug\EF.pdb
+D:\practice\program2\EF\EF\obj\Debug\EF.exe
+D:\practice\program2\EF\EF\obj\Debug\EF.pdb
+D:\practice\program2\EF\EF\bin\Debug\EntityFramework.dll
+D:\practice\program2\EF\EF\bin\Debug\EntityFramework.SqlServer.dll
+D:\practice\program2\EF\EF\bin\Debug\EntityFramework.xml
+D:\practice\program2\EF\EF\bin\Debug\EntityFramework.SqlServer.xml
+D:\practice\program2\EF\EF\bin\Debug\zh-Hant\EntityFramework.resources.dll
