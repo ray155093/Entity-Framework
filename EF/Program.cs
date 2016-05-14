@@ -20,14 +20,30 @@ namespace EF
             //int? b = a?.Length;
             */
 
+            
             using (var db = new ContosoUniversityEntities())
             {
+                //基本
                 foreach (var item in db.Course)
                 {
                     Console.WriteLine(item.Title);
  
                 }
+                //取出課程名稱中有Git的
+                Console.WriteLine("\n");
+                var data = from p in db.Course
+                           where p.Title.Contains("Git")
+                           select p;
+                foreach (var item in data)
+                {
+                    Console.WriteLine(item.Title);
+
+                }
+
             }
+           
+
+
             Console.WriteLine("Hello");
         }
 
