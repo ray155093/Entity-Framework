@@ -27,10 +27,12 @@ namespace EF
                 foreach (var item in db.Course)
                 {
                     Console.WriteLine(item.Title);
- 
+
                 }
-                //取出課程名稱中有Git的
+                
                 Console.WriteLine("\n");
+
+                //取出課程名稱中有Git的 用LINQ
                 var data = from p in db.Course
                            where p.Title.Contains("Git")
                            select p;
@@ -39,12 +41,45 @@ namespace EF
                     Console.WriteLine(item.Title);
 
                 }
+                Console.WriteLine("\n");
 
+                //新增欄位
+                db.Course.Add(new Course()
+                {
+                    Title="Git Test",
+                    Credits=5,
+                    DepartmentID=1
+                });
+                
+
+                //新增欄位
+                var c = new Course()
+                {
+                    Title = "Git Test 2",
+                    Credits = 5,
+                };
+                c.Department = db.Department.Find(2);
+
+                //更新前
+                Console.WriteLine(c.DepartmentID);
+               
+                db.Course.Add(c);
+                //更新後
+                db.SaveChanges();
+                Console.WriteLine(c.DepartmentID);
+
+                Console.ReadLine();
+
+
+                foreach (var item in data)
+                {
+                    Console.WriteLine(item.Title);
+
+                }
+           
             }
            
 
-
-            Console.WriteLine("Hello");
         }
 
     }
