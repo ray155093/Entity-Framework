@@ -16,6 +16,7 @@
           <Property Name="Memo" Type="nvarchar" MaxLength="80" />
           <Property Name="CreateOn" Type="datetime" StoreGeneratedPattern="Computed" />
           <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="CourseType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CourseInstructor">
           <Key>
@@ -262,6 +263,7 @@
           <Property Name="Memo" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Name="CreateOn" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="CourseType" Type="ContosoUniversityModel.CourseType" Nullable="false" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -415,7 +417,7 @@
           <EntitySet Name="sysdiagrams" EntityType="ContosoUniversityModel.sysdiagrams" />
           <FunctionImport Name="GetDept" ReturnType="Collection(ContosoUniversityModel.GetDept_Result)" />
           <FunctionImport Name="GetDeptByID" ReturnType="Collection(ContosoUniversityModel.GetDeptByID_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertDept">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -457,6 +459,12 @@
           <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="CourseCount" Nullable="true" />
         </ComplexType>
+        <EnumType Name="CourseType" IsFlags="true">
+          <Member Name="無" Value="0" />
+          <Member Name="前端" Value="1" />
+          <Member Name="後端" Value="2" />
+          <Member Name="全端" Value="4" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -466,6 +474,7 @@
           <EntitySetMapping Name="Course">
             <EntityTypeMapping TypeName="ContosoUniversityModel.Course">
               <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseType" ColumnName="CourseType" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="CreateOn" ColumnName="CreateOn" />
                 <ScalarProperty Name="Memo" ColumnName="Memo" />

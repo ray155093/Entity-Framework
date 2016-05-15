@@ -70,6 +70,8 @@ namespace EF
                 //使用預存程序新增資料(db);
                 //Console.WriteLine("------");
                 // Select(db);
+                列舉(db);
+                //Console.WriteLine("------");
 
 
                 Console.ReadLine();
@@ -420,6 +422,32 @@ namespace EF
 
             var data = db.Department.ToList().LastOrDefault();
             Console.WriteLine(data.Name + "\t" + data.Budget + "\t" + data.StartDate.ToShortDateString());
+        }
+
+        /// <summary>
+        /// 需要.NET FrameWork4.5以上
+        /// </summary>
+        /// <param name="db"></param>
+        public static void 列舉(ContosoUniversityEntities db)
+        {
+            var c1 = db.Course.Find(7);
+            c1.CourseType = CourseType.前端 | CourseType.後端;
+
+            var c2 = db.Course.Find(6);
+            c2.CourseType = CourseType.前端;
+            
+            var c3 = db.Course.Find(5);
+            c3.CourseType = CourseType.前端 | CourseType.全端;
+
+            db.SaveChanges();
+
+            var data = db.Course.Where(p => p.CourseType.HasFlag(CourseType.前端));
+
+            foreach (var item in data)
+            {
+                Console.WriteLine(item.Title + "\t" + item.CourseType);
+            }
+
         }
     }
 }
