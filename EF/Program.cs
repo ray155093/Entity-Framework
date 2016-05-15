@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace EF
 {
     class Program
     {
-        public class  DeptCouseCount
+        public class DeptCouseCount
         {
-            public Int32 DepartmentID {set;get;}
-            public string Name {set;get;}
-            public Int32 CourseCount {set;get;}
+            public Int32 DepartmentID { set; get; }
+            public string Name { set; get; }
+            public Int32 CourseCount { set; get; }
         }
         static void Main(string[] args)
         {
@@ -53,6 +54,9 @@ namespace EF
                 //Console.WriteLine("------");
 
                 InsertByInit(db);
+                Console.WriteLine("------");
+
+                DbEntityEntryTest(db);
                 Console.WriteLine("------");
                 // Select(db);
 
@@ -216,11 +220,11 @@ namespace EF
                 FROM      Course INNER JOIN
                    Department ON Course.DepartmentID = Department.DepartmentID
 				   group by Department.DepartmentID, Department.Name ";
-            var data= db.Database.SqlQuery<DeptCouseCount>(sql);
+            var data = db.Database.SqlQuery<DeptCouseCount>(sql);
 
             foreach (var item in data)
             {
-                Console.WriteLine(item.Name+" \t"+item.CourseCount);
+                Console.WriteLine(item.Name + " \t" + item.CourseCount);
             }
         }
         /// <summary>
@@ -255,6 +259,47 @@ namespace EF
 
             db.SaveChanges();
 
+        }
+        /// <summary>
+        /// 狀態分析
+        /// </summary>
+        /// <param name="db"></param>
+        public static void DbEntityEntryTest(ContosoUniversityEntities db)
+        {
+            //從物件找狀態
+            //從狀態找物件
+
+            //將產生的log輸出
+            db.Database.Log = Console.WriteLine;
+            
+            var c = db.Course.Find(8);
+            var cee = db.Entry(c);
+            //cee.OriginalValues;
+            //cee.CurrentValues;
+            Console.WriteLine(c.Title + "\t" +db.Entry(c).State);
+            c.Credits += 1;
+            Console.WriteLine(c.Title + "\t" + db.Entry(c).State);
+            db.Course.Remove(c);
+
+            db.Entry(c).State = System.Data.Entity.EntityState.Added;
+            db.SaveChanges();
+
+
+            //物件(Course)沒有狀態 狀態存在DB中
+           // DbEntityEntry ce = db.Entry(db.Course);
+
+        }
+        /// <summary>
+        /// j說明Dbser的屬性
+        /// </summary>
+        /// <param name="db"></param>
+        public static void Create(ContosoUniversityEntities db)
+        {
+            //資料只唯讀 加快讀取速度 降低記憶體
+           // var data =db.Course.AsNoTracking() ;
+
+            //取出資料類行為Ccourse
+           // data = db.Course.SqlQuery("SELECT * FROM ........");
         }
     }
 }
