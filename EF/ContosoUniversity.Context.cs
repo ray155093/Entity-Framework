@@ -41,5 +41,27 @@ namespace EF
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDept_Result>("GetDept");
         }
+    
+        public virtual ObjectResult<GetDeptByID_Result> GetDeptByID(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDeptByID_Result>("GetDeptByID", idParameter);
+        }
+    
+        public virtual int InsertDept(string name, Nullable<decimal> budget)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var budgetParameter = budget.HasValue ?
+                new ObjectParameter("Budget", budget) :
+                new ObjectParameter("Budget", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertDept", nameParameter, budgetParameter);
+        }
     }
 }

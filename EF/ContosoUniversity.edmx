@@ -187,6 +187,13 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="GetDept" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetDeptByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertDept" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Budget" Type="decimal" Mode="In" />
+        </Function>
         <EntityContainer Name="ContosoUniversityModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseInstructor" EntityType="Self.CourseInstructor" Schema="dbo" store:Type="Tables" />
@@ -407,6 +414,13 @@
           <EntitySet Name="vw_test" EntityType="ContosoUniversityModel.vw_test" />
           <EntitySet Name="sysdiagrams" EntityType="ContosoUniversityModel.sysdiagrams" />
           <FunctionImport Name="GetDept" ReturnType="Collection(ContosoUniversityModel.GetDept_Result)" />
+          <FunctionImport Name="GetDeptByID" ReturnType="Collection(ContosoUniversityModel.GetDeptByID_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertDept">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Budget" Mode="In" Type="Decimal" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="View_DeptsourceCount">
           <Key>
@@ -434,6 +448,11 @@
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <ComplexType Name="GetDept_Result">
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CourseCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetDeptByID_Result">
           <Property Type="Int32" Name="DepartmentID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="CourseCount" Nullable="true" />
@@ -467,6 +486,14 @@
                 <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
                 <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
               </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="ContosoUniversityModel.Department">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="ContosoUniversityModel.Store.InsertDept">
+                  <ScalarProperty Name="Budget" ParameterName="Budget" />
+                  <ScalarProperty Name="Name" ParameterName="Name" />
+                </InsertFunction>
+              </ModificationFunctionMapping>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Enrollment">
@@ -544,6 +571,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDeptByID" FunctionName="ContosoUniversityModel.Store.GetDeptByID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContosoUniversityModel.GetDeptByID_Result">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CourseCount" ColumnName="CourseCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertDept" FunctionName="ContosoUniversityModel.Store.InsertDept" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -61,8 +61,14 @@ namespace EF
 
                 //DbPropertyValues(db);
                 //Console.WriteLine("------");
-                離線模式(db);
-                Console.WriteLine("------");
+                //離線模式(db);
+                //Console.WriteLine("------");
+
+                //預存程序(db);
+                //Console.WriteLine("------");
+
+                //使用預存程序新增資料(db);
+                //Console.WriteLine("------");
                 // Select(db);
 
 
@@ -360,7 +366,7 @@ namespace EF
 
             using (var db2 = new ContosoUniversityEntities())
             {
-                
+
                 Console.WriteLine(db2.Entry(c).State);
                 db2.Course.Attach(c);
                 Console.WriteLine(db2.Entry(c).State);
@@ -371,9 +377,9 @@ namespace EF
 
                 //資料庫中的title 是離線模式2 但是兩次console.writeline都是tttt 因為被cache住了
                 db2.Course.Add(c);
-                 c.Title = "ttttt";
+                c.Title = "ttttt";
                 Console.WriteLine(c.Title);
-                
+
                 db2.Course.Find(8);
                 Console.WriteLine(c.Title);
                 db2.SaveChanges();
@@ -391,6 +397,29 @@ namespace EF
 
             Console.WriteLine();
 
+            var data2 = db.GetDeptByID(4);
+            foreach (var item in data2)
+            {
+                Console.WriteLine(item.Name + "\t" + item.CourseCount);
+            }
+
+
+        }
+        public static void 使用預存程序新增資料(ContosoUniversityEntities db)
+        {
+            db.Database.Log = Console.WriteLine;
+
+            var Dept = new Department
+            {
+                Name = "test",
+                InstructorID = 4,
+                Budget = 123.45M
+            };
+            db.Department.Add(Dept);
+            db.SaveChanges();
+
+            var data = db.Department.ToList().LastOrDefault();
+            Console.WriteLine(data.Name + "\t" + data.Budget + "\t" + data.StartDate.ToShortDateString());
         }
     }
 }
