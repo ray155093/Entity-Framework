@@ -13,6 +13,8 @@ namespace EF
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ContosoUniversityEntities : DbContext
     {
@@ -34,5 +36,10 @@ namespace EF
         public virtual DbSet<View_DeptsourceCount> View_DeptsourceCount { get; set; }
         public virtual DbSet<vw_test> vw_test { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+    
+        public virtual ObjectResult<GetDept_Result> GetDept()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDept_Result>("GetDept");
+        }
     }
 }

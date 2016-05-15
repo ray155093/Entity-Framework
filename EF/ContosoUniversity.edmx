@@ -186,6 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetDept" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ContosoUniversityModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseInstructor" EntityType="Self.CourseInstructor" Schema="dbo" store:Type="Tables" />
@@ -405,6 +406,7 @@
           <EntitySet Name="View_DeptsourceCount" EntityType="ContosoUniversityModel.View_DeptsourceCount" />
           <EntitySet Name="vw_test" EntityType="ContosoUniversityModel.vw_test" />
           <EntitySet Name="sysdiagrams" EntityType="ContosoUniversityModel.sysdiagrams" />
+          <FunctionImport Name="GetDept" ReturnType="Collection(ContosoUniversityModel.GetDept_Result)" />
         </EntityContainer>
         <EntityType Name="View_DeptsourceCount">
           <Key>
@@ -431,6 +433,11 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <ComplexType Name="GetDept_Result">
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CourseCount" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -528,6 +535,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDept" FunctionName="ContosoUniversityModel.Store.GetDept">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ContosoUniversityModel.GetDept_Result">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CourseCount" ColumnName="CourseCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

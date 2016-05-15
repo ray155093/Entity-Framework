@@ -378,9 +378,19 @@ namespace EF
                 Console.WriteLine(c.Title);
                 db2.SaveChanges();
 
-
-
             }
+        }
+        public static void 預存程序(ContosoUniversityEntities db)
+        {
+            var data = db.GetDept();
+
+            foreach (var item in data)
+            {
+                Console.WriteLine(item.Name + "\t" + item.CourseCount);
+            }
+
+            Console.WriteLine();
+
         }
     }
 }
