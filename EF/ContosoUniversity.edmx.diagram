@@ -12,6 +12,7 @@
         <AssociationConnector Association="ContosoUniversityModel.FK_dbo_OfficeAssignment_dbo_Instructor_InstructorID" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ContosoUniversityModel.View_DeptsourceCount" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="ContosoUniversityModel.vw_test" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="ContosoUniversityModel.sysdiagrams" Width="1.5" PointX="3.375" PointY="6.75" />
       </Diagram>
       <Diagram DiagramId="2c288833ce9b4a8ebca0a6ac2f29abd0" Name="Diagram2" >
         <EntityTypeShape EntityType="ContosoUniversityModel.Course" Width="1.5" PointX="0.75" PointY="1" FillColor="Maroon" />

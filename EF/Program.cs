@@ -53,10 +53,13 @@ namespace EF
                 //SelectbyView(db);
                 //Console.WriteLine("------");
 
-                InsertByInit(db);
-                Console.WriteLine("------");
+                //InsertByInit(db);
+                //Console.WriteLine("------");
 
-                DbEntityEntryTest(db);
+                //DbEntityEntryTest(db);
+                //Console.WriteLine("------");
+
+                DbPropertyValues(db);
                 Console.WriteLine("------");
                 // Select(db);
 
@@ -268,6 +271,10 @@ namespace EF
         {
             //從物件找狀態
             //從狀態找物件
+            //EF是用狀態來進行判斷資料有沒有被修改
+
+            //AsNoTracking 取得資料為唯讀，可以讓資料只取得一份(沒有修改資料 ex:CurrentValues) 結果:讀取速度加快，使用記憶體減少，但資料為唯讀。
+            //var c = db.Course.Find(1).AsNoTracking();
 
             //將產生的log輸出
             db.Database.Log = Console.WriteLine;
@@ -280,7 +287,7 @@ namespace EF
             c.Credits += 1;
             Console.WriteLine(c.Title + "\t" + db.Entry(c).State);
             db.Course.Remove(c);
-
+            db.SaveChanges();
             db.Entry(c).State = System.Data.Entity.EntityState.Added;
             db.SaveChanges();
 
@@ -290,7 +297,7 @@ namespace EF
 
         }
         /// <summary>
-        /// j說明Dbser的屬性
+        /// 說明Dbser的屬性
         /// </summary>
         /// <param name="db"></param>
         public static void Create(ContosoUniversityEntities db)
@@ -300,6 +307,43 @@ namespace EF
 
             //取出資料類行為Ccourse
            // data = db.Course.SqlQuery("SELECT * FROM ........");
+        }
+
+        /// <summary>
+        /// 說明DbPropertyValues的屬性
+        /// </summary>
+        /// <param name="db"></param>
+        public static void DbPropertyValues(ContosoUniversityEntities db)
+        {
+            var c = db.Course.ToList().LastOrDefault();
+
+            c.Title = "Test 123";
+
+            if (db.Entry(c).State == System.Data.Entity.EntityState.Modified)
+            {
+                var ce = db.Entry(c);
+                var Oldvalue = ce.CurrentValues.GetValue<string>("Title");
+                var Newvalue = ce.CurrentValues.GetValue<string>("Title");
+
+                Console.WriteLine("OldTitle:"+Oldvalue+" NewValue:"+Newvalue);
+
+
+                foreach (var prop in ce.OriginalValues.PropertyNames)
+                {
+                    Console.WriteLine( prop+" :"+ prop.GetType().Name);
+                   
+                    //Console.WriteLine("prop :" + prop.ToString() + " : " + ce.OriginalValues.GetValue<prop.GetType()>(prop));
+                    
+                    
+                }
+
+                //可以把這段加入Setting.cs裡 統一管理
+                ce.CurrentValues.SetValues(new
+                    {
+                        ModifiedOn = DateTime.Now
+                    });
+            }
+
         }
     }
 }

@@ -1,4 +1,3 @@
-D:\practice\program2\EF\EF\obj\Debug\EfConsole.csprojResolveAssemblyReference.cache
 D:\practice\program2\EF\EF\bin\Debug\EF.exe.config
 D:\practice\program2\EF\EF\bin\Debug\EF.exe
 D:\practice\program2\EF\EF\bin\Debug\EF.pdb
