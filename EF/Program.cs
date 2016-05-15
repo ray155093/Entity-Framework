@@ -59,8 +59,8 @@ namespace EF
                 //DbEntityEntryTest(db);
                 //Console.WriteLine("------");
 
-                DbPropertyValues(db);
-                Console.WriteLine("------");
+                //DbPropertyValues(db);
+                //Console.WriteLine("------");
                 離線模式(db);
                 Console.WriteLine("------");
                 // Select(db);
@@ -360,12 +360,25 @@ namespace EF
 
             using (var db2 = new ContosoUniversityEntities())
             {
+                
                 Console.WriteLine(db2.Entry(c).State);
                 db2.Course.Attach(c);
                 Console.WriteLine(db2.Entry(c).State);
                 c.Title = "離線模式2";
                 Console.WriteLine(db2.Entry(c).State);
                 db2.SaveChanges();
+
+
+                //資料庫中的title 是離線模式2 但是兩次console.writeline都是tttt 因為被cache住了
+                db2.Course.Add(c);
+                 c.Title = "ttttt";
+                Console.WriteLine(c.Title);
+                
+                db2.Course.Find(8);
+                Console.WriteLine(c.Title);
+                db2.SaveChanges();
+
+
 
             }
         }
