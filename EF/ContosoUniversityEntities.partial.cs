@@ -21,20 +21,21 @@ namespace EF
                 switch (entity.State)
                 {
                     case EntityState.Added:
-                        break;
-                    case EntityState.Deleted:
-                        break;
-                    case EntityState.Detached:
-                        break;
-                    case EntityState.Modified:
-                        break;
+
                     case EntityState.Unchanged:
-                        break;
                     default:
                         break;
-                }
-                {
- 
+                    case EntityState.Deleted:
+
+                    case EntityState.Detached:
+
+                    case EntityState.Modified:
+                        entity.CurrentValues.SetValues(new
+                        {
+                            ModifiedOn = DateTime.Now
+                        });
+                        break;
+
                 }
                 if (entity.Entity is Course)
                 {
