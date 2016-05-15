@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace EF
 {
@@ -70,7 +71,8 @@ namespace EF
                 //使用預存程序新增資料(db);
                 //Console.WriteLine("------");
                 // Select(db);
-                列舉(db);
+                //列舉(db);
+                預先載入(db);
                 //Console.WriteLine("------");
 
 
@@ -435,7 +437,7 @@ namespace EF
 
             var c2 = db.Course.Find(6);
             c2.CourseType = CourseType.前端;
-            
+
             var c3 = db.Course.Find(5);
             c3.CourseType = CourseType.前端 | CourseType.全端;
 
@@ -446,6 +448,44 @@ namespace EF
             foreach (var item in data)
             {
                 Console.WriteLine(item.Title + "\t" + item.CourseType);
+            }
+
+        }
+
+        public static void 預先載入(ContosoUniversityEntities db)
+        {
+            db.Database.Log = Console.WriteLine;
+
+            //是否開啟延遲載入 EF預設為延遲載入
+            db.Configuration.LazyLoadingEnabled = false;
+
+
+            //預先載入
+            //var data = db.Course.Include(p => p.Department);
+
+            var c = db.Course.Where(p => p.CourseType.HasFlag(CourseType.前端));
+            //載入導覽屬性
+            //db.Entry(c).Reference(p => p.Department).Load();
+
+
+            var data = db.Course.Where(p => p.CourseType.HasFlag(CourseType.前端));
+            foreach (var item in data)
+            {
+                Console.WriteLine("-----");
+                Console.WriteLine(item.Title);
+
+               
+                //手動啟動載入2
+                var refLink = db.Entry(item).Reference(p => p.Department);
+                              
+                if (!refLink.IsLoaded)
+                {
+                    refLink.Load();
+                }
+                Console.WriteLine(item.Department.Name);
+                Console.WriteLine("-----");
+                Console.WriteLine();
+
             }
 
         }
