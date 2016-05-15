@@ -8,3 +8,4 @@ D:\practice\program2\EF\EF\bin\Debug\EntityFramework.SqlServer.dll
 D:\practice\program2\EF\EF\bin\Debug\EntityFramework.xml
 D:\practice\program2\EF\EF\bin\Debug\EntityFramework.SqlServer.xml
 D:\practice\program2\EF\EF\bin\Debug\zh-Hant\EntityFramework.resources.dll
+D:\practice\program2\EF\EF\obj\Debug\EfConsole.csprojResolveAssemblyReference.cache

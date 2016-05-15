@@ -61,6 +61,8 @@ namespace EF
 
                 DbPropertyValues(db);
                 Console.WriteLine("------");
+                離線模式(db);
+                Console.WriteLine("------");
                 // Select(db);
 
 
@@ -278,12 +280,12 @@ namespace EF
 
             //將產生的log輸出
             db.Database.Log = Console.WriteLine;
-            
+
             var c = db.Course.Find(8);
             var cee = db.Entry(c);
             //cee.OriginalValues;
             //cee.CurrentValues;
-            Console.WriteLine(c.Title + "\t" +db.Entry(c).State);
+            Console.WriteLine(c.Title + "\t" + db.Entry(c).State);
             c.Credits += 1;
             Console.WriteLine(c.Title + "\t" + db.Entry(c).State);
             db.Course.Remove(c);
@@ -293,7 +295,7 @@ namespace EF
 
 
             //物件(Course)沒有狀態 狀態存在DB中
-           // DbEntityEntry ce = db.Entry(db.Course);
+            // DbEntityEntry ce = db.Entry(db.Course);
 
         }
         /// <summary>
@@ -303,10 +305,10 @@ namespace EF
         public static void Create(ContosoUniversityEntities db)
         {
             //資料只唯讀 加快讀取速度 降低記憶體
-           // var data =db.Course.AsNoTracking() ;
+            // var data =db.Course.AsNoTracking() ;
 
             //取出資料類行為Ccourse
-           // data = db.Course.SqlQuery("SELECT * FROM ........");
+            // data = db.Course.SqlQuery("SELECT * FROM ........");
         }
 
         /// <summary>
@@ -325,16 +327,16 @@ namespace EF
                 var Oldvalue = ce.CurrentValues.GetValue<string>("Title");
                 var Newvalue = ce.CurrentValues.GetValue<string>("Title");
 
-                Console.WriteLine("OldTitle:"+Oldvalue+" NewValue:"+Newvalue);
+                Console.WriteLine("OldTitle:" + Oldvalue + " NewValue:" + Newvalue);
 
 
                 foreach (var prop in ce.OriginalValues.PropertyNames)
                 {
-                    Console.WriteLine( prop+" :"+ prop.GetType().Name);
-                   
+                    Console.WriteLine(prop + " :" + prop.GetType().Name);
+
                     //Console.WriteLine("prop :" + prop.ToString() + " : " + ce.OriginalValues.GetValue<prop.GetType()>(prop));
-                    
-                    
+
+
                 }
 
                 //可以把這段加入Setting.cs裡 統一管理
@@ -344,6 +346,28 @@ namespace EF
                     });
             }
 
+        }
+
+        public static void 離線模式(ContosoUniversityEntities db)
+        {
+            var c = new Course()
+            {
+                CourseID = 8,
+                Title = "離線模式",
+                DepartmentID = 1,
+                Credits = 1
+            };
+
+            using (var db2 = new ContosoUniversityEntities())
+            {
+                Console.WriteLine(db2.Entry(c).State);
+                db2.Course.Attach(c);
+                Console.WriteLine(db2.Entry(c).State);
+                c.Title = "離線模式2";
+                Console.WriteLine(db2.Entry(c).State);
+                db2.SaveChanges();
+
+            }
         }
     }
 }
